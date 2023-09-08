@@ -5,8 +5,8 @@ import time
 import glob
 from concurrent.futures import ThreadPoolExecutor
 
-FILE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'HEIC', 'mp4', 'MOV', 'JPG', 'PNG']
-directory_path = r"<YOUR FOLDER GOES HERE>"
+FILE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'HEIC', 'mp4', 'MOV', 'JPG', 'PNG', 'MP4', 'mov']
+DIRECTORY_PATH = r"YOUR PATH HERE"
 
 def custom_str_to_unix_timestamp(date_str):
     # Converting custom date string to datetime object
@@ -38,11 +38,6 @@ def scan_directory(directory_path):
         for media_file in media_files:
             json_file = f"{media_file}.json"
             if os.path.exists(json_file):
-                files.append((media_file, json_file))
+                process_file_pair(json_file, media_file)
 
-    # use threading to speed execution up, didnt really test without it, dont care.
-    with ThreadPoolExecutor() as e:
-        for media, json_file in files:
-            e.submit(process_file_pair, json_file, media)
-
-scan_directory(directory_path)
+scan_directory(DIRECTORY_PATH)
